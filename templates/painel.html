@@ -32,15 +32,16 @@
             cursor: pointer;
         }
         button:active { opacity: 0.8; }
-        #esperando { margin-top: 20px; color: #9297a3; }
+        #esperando { margin-top: 20px; color: #9297a3; font-size: 14px; }
     </style>
 </head>
 <body>
     <h1>Senha sendo atendida agora</h1>
-    <!-- Começa com um traço porque, ao abrir o painel pela primeira vez,
-         ainda ninguém foi chamado nessa sessão. -->
     <div id="senha_atual">---</div>
 
+    <!-- Um botão só: quem decide se a próxima é normal ou preferencial
+         é o servidor, aplicando a regra de intercalação - o atendente
+         não precisa (e não deve) escolher isso manualmente. -->
     <button onclick="chamarProxima()">CHAMAR PRÓXIMO →</button>
     <div id="esperando"></div>
 
@@ -48,20 +49,16 @@
         async function chamarProxima() {
             const resposta = await fetch("/chamar", { method: "POST" });
             const dados = await resposta.json();
-
-            // Se a fila estava vazia, o servidor devolve "senha: null" -
-            // aí avisamos isso em vez de mostrar "null" na tela.
             document.getElementById("senha_atual").textContent =
                 dados.senha ? dados.senha : "fila vazia";
         }
 
-        // Igual ao totem: consulta o servidor de tempos em tempos pra
-        // manter o número de pessoas esperando sempre atualizado.
         async function atualizarContagem() {
             const resposta = await fetch("/status");
             const dados = await resposta.json();
             document.getElementById("esperando").textContent =
-                dados.quantidade_esperando + " pessoa(s) esperando na fila";
+                dados.esperando_normal + " normal(is) · " +
+                dados.esperando_preferencial + " preferencial(is) esperando";
         }
         setInterval(atualizarContagem, 3000);
         atualizarContagem();

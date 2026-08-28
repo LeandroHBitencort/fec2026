@@ -59,3 +59,15 @@ no `server.py` — é o melhor lugar para começar a ler.
 
 - [Como começou](https://github.com/LeandroHBitencort/Gerenciamento_Fila) —
   o protótipo original do trabalho de Estrutura de Dados II (C + Python)
+
+## Equipe
+
+**Leandro H. Bitencort** — idealizador do projeto
+
+Grupo:
+- Arnaldo Goulart da Silva Neto
+- Isabela Yukie Furuyama
+- Jafé Vinícius Antonio
+- João Vitor Deodato Haddad
+- João Ricardo da Conceição
+- Isis Marcelle da Silva

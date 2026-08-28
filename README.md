@@ -1,4 +1,4 @@
-# BitFlow FEC 2026 — versão simplificada
+# BitFlow - VERSÃO FEC 2026
 
 Essa é uma versão enxuta do BitFlow, feita especialmente para explicar
 como o sistema funciona por dentro. **Não é o código que roda em

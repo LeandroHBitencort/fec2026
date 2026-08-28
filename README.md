@@ -62,7 +62,8 @@ no `server.py` — é o melhor lugar para começar a ler.
 
 ## Equipe
 
-**Leandro H. Bitencort** — idealizador do projeto
+**Leandro H. Bitencort** — idealizador do projeto ·
+[GitHub](https://github.com/LeandroHBitencort)
 
 Grupo:
 - Arnaldo Goulart da Silva Neto

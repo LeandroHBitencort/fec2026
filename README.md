@@ -1,6 +1,6 @@
 # BitFlow - VERSÃO FEC 2026
 
-Essa é a versão do BitFlow feita para o FEC 2026, pensada para explicar
+Essa é a versão do BitFlow feita para a FEC 2026, pensada para explicar
 como o sistema funciona por dentro. O código de produção é outro
 (atende várias lojas, com impressora térmica, login e banco de dados)
 — aqui está a lógica essencial de uma fila FIFO, para qualquer pessoa

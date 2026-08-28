@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel de chamada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1d23;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 { font-size: 28px; color: #9297a3; margin-bottom: 20px; }
+        #senha {
+            font-size: 180px;
+            font-weight: 900;
+            transition: transform 0.2s ease;
+        }
+        /* Classe aplicada por um instante quando uma senha nova é
+           chamada, só pra dar um "pulso" visual chamando atenção -
+           sem isso, a troca de número passaria despercebida numa tela
+           grande que ninguém fica olhando o tempo todo. */
+        #senha.piscando { transform: scale(1.08); color: #6e93f7; }
+    </style>
+</head>
+<body>
+    <h1>SENHA CHAMADA</h1>
+    <div id="senha">---</div>
+
+    <script>
+        // Guarda a última senha que essa página já mostrou, pra
+        // conseguir comparar com a nova e saber se REALMENTE mudou
+        // (e só então tocar o efeito visual) - sem isso, cada consulta
+        // ao servidor faria o número "piscar" de novo, mesmo sem
+        // nenhuma chamada nova ter acontecido.
+        let ultimaSenhaMostrada = null;
+
+        async function atualizarTela() {
+            const resposta = await fetch("/status");
+            const dados = await resposta.json();
+            const elemento = document.getElementById("senha");
+
+            if (dados.chamando_agora && dados.chamando_agora !== ultimaSenhaMostrada) {
+                ultimaSenhaMostrada = dados.chamando_agora;
+                elemento.textContent = dados.chamando_agora;
+
+                // Aplica o efeito de "pulso" e remove depois de meio
+                // segundo, pra poder tocar de novo na próxima mudança.
+                elemento.classList.add("piscando");
+                setTimeout(() => elemento.classList.remove("piscando"), 500);
+            }
+        }
+
+        // Consulta o servidor sempre, num intervalo curto - como essa
+        // tela não tem ninguém clicando nela, ela PRECISA se atualizar
+        // sozinha pra ser útil.
+        setInterval(atualizarTela, 2000);
+        atualizarTela();
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do atendente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1d23;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 { font-size: 20px; color: #9297a3; margin-bottom: 10px; }
+        #senha_atual {
+            font-size: 96px;
+            font-weight: 900;
+            margin: 20px 0;
+        }
+        button {
+            background: #2b5fe0;
+            color: white;
+            border: none;
+            padding: 25px 50px;
+            font-size: 22px;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+        button:active { opacity: 0.8; }
+        #esperando { margin-top: 20px; color: #9297a3; }
+    </style>
+</head>
+<body>
+    <h1>Senha sendo atendida agora</h1>
+    <!-- Começa com um traço porque, ao abrir o painel pela primeira vez,
+         ainda ninguém foi chamado nessa sessão. -->
+    <div id="senha_atual">---</div>
+
+    <button onclick="chamarProxima()">CHAMAR PRÓXIMO →</button>
+    <div id="esperando"></div>
+
+    <script>
+        async function chamarProxima() {
+            const resposta = await fetch("/chamar", { method: "POST" });
+            const dados = await resposta.json();
+
+            // Se a fila estava vazia, o servidor devolve "senha: null" -
+            // aí avisamos isso em vez de mostrar "null" na tela.
+            document.getElementById("senha_atual").textContent =
+                dados.senha ? dados.senha : "fila vazia";
+        }
+
+        // Igual ao totem: consulta o servidor de tempos em tempos pra
+        // manter o número de pessoas esperando sempre atualizado.
+        async function atualizarContagem() {
+            const resposta = await fetch("/status");
+            const dados = await resposta.json();
+            document.getElementById("esperando").textContent =
+                dados.quantidade_esperando + " pessoa(s) esperando na fila";
+        }
+        setInterval(atualizarContagem, 3000);
+        atualizarContagem();
+    </script>
+</body>
+</html>

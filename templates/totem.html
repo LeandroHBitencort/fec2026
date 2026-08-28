@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Totem - Pegue sua senha</title>
+    <style>
+        /* Estilo bem simples, só pra ficar apresentável - o importante
+           de verdade pra entender o projeto está no server.py e no
+           JavaScript aqui embaixo, não no CSS. */
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1d23;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 { font-size: 24px; margin-bottom: 40px; }
+        button {
+            background: #2b5fe0;
+            color: white;
+            border: none;
+            padding: 30px 60px;
+            font-size: 28px;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+        button:active { opacity: 0.8; }
+        #resultado {
+            margin-top: 40px;
+            font-size: 64px;
+            font-weight: 900;
+        }
+        #esperando { font-size: 16px; color: #9297a3; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Toque no botão para pegar sua senha</h1>
+    <button onclick="pegarSenha()">PEGAR SENHA</button>
+
+    <!-- Esse espaço fica vazio até o JavaScript preencher com a senha
+         gerada - por isso começa sem nenhum texto dentro. -->
+    <div id="resultado"></div>
+    <div id="esperando"></div>
+
+    <script>
+        // async/await é o jeito moderno de esperar uma resposta do
+        // servidor sem travar a página enquanto isso - o navegador
+        // continua funcionando normalmente durante a espera.
+        async function pegarSenha() {
+            // fetch() faz um pedido pro servidor. method: "POST" avisa
+            // que estamos PEDINDO pra ele FAZER algo (gerar uma senha
+            // nova), diferente de um GET que só pede uma página pra ler.
+            const resposta = await fetch("/gerar", { method: "POST" });
+
+            // A resposta chega em formato JSON (texto) - .json() converte
+            // esse texto de volta num objeto que o JavaScript entende.
+            const dados = await resposta.json();
+
+            // Mostra a senha recebida na tela, bem grande.
+            document.getElementById("resultado").textContent = dados.senha;
+        }
+
+        // Consulta o servidor a cada 3 segundos só pra mostrar quantas
+        // pessoas estão esperando na fila agora - não precisa que o
+        // cliente clique em nada pra isso atualizar sozinho.
+        async function atualizarContagem() {
+            const resposta = await fetch("/status");
+            const dados = await resposta.json();
+            document.getElementById("esperando").textContent =
+                dados.quantidade_esperando + " pessoa(s) esperando na fila";
+        }
+        setInterval(atualizarContagem, 3000);
+        atualizarContagem(); // já chama uma vez ao abrir a página, sem esperar os 3s
+    </script>
+</body>
+</html>

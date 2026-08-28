@@ -1,4 +1,4 @@
-# BitFlow FEC 2026
+# BitFlow - VERSÃO FEC 2026
 
 Essa é a versão do BitFlow feita para o FEC 2026, pensada para explicar
 como o sistema funciona por dentro. O código de produção é outro

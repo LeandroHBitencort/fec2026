@@ -1,12 +1,11 @@
-# BitFlow FEC 2026 — versão simplificada
+# BitFlow FEC 2026
 
-Essa é uma versão enxuta do BitFlow, feita especialmente para explicar
-como o sistema funciona por dentro. **Não é o código que roda em
-produção de verdade** (aquele tem várias lojas, impressora térmica,
-login com senha e banco de dados) — essa aqui é só a lógica essencial
-de uma fila FIFO, para qualquer pessoa do grupo conseguir ler o
-`server.py` de cima a baixo e entender exatamente o que está
-acontecendo em cada linha.
+Essa é a versão do BitFlow feita para o FEC 2026, pensada para explicar
+como o sistema funciona por dentro. O código de produção é outro
+(atende várias lojas, com impressora térmica, login e banco de dados)
+— aqui está a lógica essencial de uma fila FIFO, para qualquer pessoa
+do grupo conseguir ler o `server.py` de cima a baixo e entender
+exatamente o que está acontecendo em cada linha.
 
 ## O conceito: fila FIFO
 

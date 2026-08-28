@@ -1,9 +1,9 @@
 # =============================================================================
-# BitFlow FEC 2026 - versão simplificada, feita pra explicar como uma fila
-# de senhas funciona por dentro. Essa NÃO é a versão que roda em produção de
-# verdade (aquela tem várias lojas, impressora térmica, login com senha,
-# banco de dados) - essa aqui é só a lógica essencial, pra qualquer pessoa
-# conseguir ler de cima a baixo e entender o que está acontecendo.
+# BitFlow FEC 2026 - feito pra explicar como uma fila de senhas funciona
+# por dentro. O código de produção é outro (atende várias lojas, com
+# impressora térmica, login e banco de dados) - aqui está a lógica
+# essencial, pra qualquer pessoa conseguir ler de cima a baixo e entender
+# o que está acontecendo.
 #
 # A ideia central é uma fila FIFO (First In, First Out - "primeiro que
 # entra é o primeiro que sai"): quem pega uma senha primeiro é chamado
